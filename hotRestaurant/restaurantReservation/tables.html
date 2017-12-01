@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <title>Tables</title>
+</head>
+<body>
+  <div class="container">
+    <div class="jumbotron">
+  <h1 class="text-center"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Hot Restaurant!</h1>  
+      <h2 class="text-center">Current tables </h2>
+
+<div class="text-center">
+  <center>
+<a href="reserve.html"><button type="button" class="btn btn-success btn-lg">
+  <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span> Make  Reservation </button></a>
+
+<a href="index.html"><button type="button" class="btn btn-info btn-lg">
+  <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home </button></a>
+</center>
+</div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Reservations</h3>
+      </div>
+      <div class="panel-body">
+        <ul id="reservations">
+          
+        </ul>
+      </div>
+    </div>
+
+    <hr> 
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Waitlist</h3>
+      </div>
+      <div class="panel-body">
+        <ul id="waitlist">
+
+        </ul>
+      </div>
+    </div>
+  
+  </div> <!--div.container-->
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous">
+  </script>
+  <script>
+    $.get('/api/new')
+     .done(function (data) {
+       const pivot = 5
+       const waitlist = data.slice(pivot)
+       const waitlistNode = $('#waitlist')
+       const reservationsNode = $('#reservations')
+       data.forEach(function (reservation, index) {
+         if (index < pivot) {
+           reservationsNode.append($('<li>').text("Res ID: " + reservation.id  + " Name: " + reservation.name))
+         } else {
+           waitlistNode.append($('<li>').text("Res ID: " + reservation.id  + " Name: " + reservation.name))
+         }
+       })
+     })
+     .fail(console.error)
+  </script>
+  
